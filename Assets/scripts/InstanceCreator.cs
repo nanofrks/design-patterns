@@ -21,7 +21,8 @@ public class InstanceCreator : MonoBehaviour
                     currentInstance = null;
                 }
 
-                currentInstance = Instantiate(basePrefab, Vector3.zero, Quaternion.identity); 
+                currentInstance = Instantiate(basePrefab, Vector3.zero, Quaternion.identity);
+                currentInstance.GetComponent<Renderer>().material.color = new Color(Random.Range(0, 31F), Random.Range(0, 31F), Random.Range(0, 31F));
             }
         }
         
