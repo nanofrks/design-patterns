@@ -4,9 +4,22 @@ using UnityEngine;
 
 public class InstanceCreator : MonoBehaviour
 {
+    private static InstanceCreator instance;
+
     [SerializeField]
     private GameObject basePrefab;
     private GameObject currentInstance;
+    private int instanceCount = 0;
+
+    public static InstanceCreator Instance { get => instance; private set => instance = value; }
+
+    private void Awake()
+    {
+        //patrón singleton
+        if (instance == null) instance = this;
+        else Destroy(gameObject);
+
+    }
 
     // Update is called once per frame
     void Update()
@@ -22,7 +35,9 @@ public class InstanceCreator : MonoBehaviour
                 }
 
                 currentInstance = Instantiate(basePrefab, Vector3.zero, Quaternion.identity);
-                currentInstance.GetComponent<Renderer>().material.color = new Color(Random.Range(0, 31F), Random.Range(0, 31F), Random.Range(0, 31F));
+                instanceCount++;
+                currentInstance.name = $"Cube{instanceCount}";
+                currentInstance.GetComponent<Renderer>().material.color = new Color(Random.Range(0, 255F), Random.Range(0, 255F), Random.Range(0, 255F));
             }
         }
         
