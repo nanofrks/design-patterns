@@ -4,25 +4,27 @@ using UnityEngine;
 
 public class InstanceCreator : MonoBehaviour
 {
-    private static InstanceCreator instance;
 
-    public static InstanceCreator Instance { get => instance; private set => instance = value; }
-
-    private void Awake()
-    {
-        //patrón singleton
-        if (instance == null) instance = this;
-        else Destroy(gameObject);
-
-    }
+    [SerializeField]
+    private float recycleTime = 3;
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            CubeFactory.Instance.DeliverNewProduct();
+            GameObject currentCube = CubePool.Instance.Retrieve();
+            currentCube.transform.position = Vector3.zero;
+            currentCube.transform.rotation = Quaternion.identity;
+            StartCoroutine(RecycleCubeCR(currentCube));
         }
         
     }
+
+    private IEnumerator RecycleCubeCR(GameObject cube)
+    {
+        yield return new WaitForSeconds(recycleTime);
+        CubePool.Instance.Recycle(cube);
+    }
+
 }

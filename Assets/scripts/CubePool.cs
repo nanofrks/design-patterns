@@ -7,7 +7,7 @@ public class CubePool : MonoBehaviour
     private static CubePool instance;
 
     [SerializeField]
-    private int size = 15;
+    private int size = 3;
 
     [SerializeField]
     private GameObject cubePrefab;
@@ -57,7 +57,8 @@ public class CubePool : MonoBehaviour
 
     private void AddNewInstanceToPool()
     {
-        GameObject newInstance = Instantiate(cubePrefab, transform.position, Quaternion.identity);
+        //GameObject newInstance = Instantiate(cubePrefab, transform.position, Quaternion.identity);
+        GameObject newInstance = CubeFactory.Instance.DeliverNewProduct();
         Recycle(newInstance);
     }
 

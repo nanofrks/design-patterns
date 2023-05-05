@@ -9,7 +9,6 @@ public class CubeFactory : MonoBehaviour
     //exponer una forma para que mi cliente pida instancias
     [SerializeField]
     private GameObject product;
-    private GameObject productInstance;
     private int instanceCount = 0;
 
     public static CubeFactory Instance { get => instance; private set => instance = value; }
@@ -25,13 +24,7 @@ public class CubeFactory : MonoBehaviour
     public GameObject DeliverNewProduct()
     {
 
-        if (productInstance != null)
-        {
-            Destroy(productInstance);
-            productInstance = null;
-        }
-
-        productInstance = Instantiate(product, Vector3.zero, Quaternion.identity);
+        GameObject productInstance = Instantiate(product, Vector3.zero, Quaternion.identity);
         instanceCount++;
         productInstance.name = $"Cube{instanceCount}";
         productInstance.GetComponent<Renderer>().material.color = new Color(Random.Range(0, 1F), Random.Range(0, 1F), Random.Range(0, 1F), 1F);
