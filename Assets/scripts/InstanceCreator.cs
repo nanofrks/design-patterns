@@ -18,7 +18,25 @@ public class InstanceCreator : MonoBehaviour
             currentCube.transform.rotation = Quaternion.identity;
             StartCoroutine(RecycleCubeCR(currentCube));
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            SimpleVFX currentVFX = VFXPool.Instance.Retrieve();
+            currentVFX.transform.position = Vector3.zero;
+            currentVFX.transform.rotation = Quaternion.identity;
+            StartCoroutine(RecycleVFXCR(currentVFX));
+
+        }
+
+
+    }
+
+    private IEnumerator RecycleVFXCR(SimpleVFX currentVFX)
+    {
+        currentVFX.StartVFX();
+        yield return new WaitForSeconds(recycleTime);
+        VFXPool.Instance.Recycle(currentVFX);
+
     }
 
     private IEnumerator RecycleCubeCR(GameObject cube)

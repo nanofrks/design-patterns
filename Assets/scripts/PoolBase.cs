@@ -9,9 +9,6 @@ public abstract class PoolBase<T> : MonoBehaviour
     [SerializeField]
     private int size = 25;
 
-    [SerializeField]
-    private T basePrefab;
-
     protected List<T> instances = new List<T>();
 
     public static PoolBase<T> Instance { get => instance; set => instance = value; }
@@ -50,14 +47,10 @@ public abstract class PoolBase<T> : MonoBehaviour
     // Start is called before the first frame update
     protected void Start()
     {
-        if (basePrefab != null)
+        for(int i=0; i < size; i++)
         {
-            for (int i = 0; i < size; i++)
-            {
-                AddNewInstanceToPool();
-            }
+            AddNewInstanceToPool();
         }
-
     }
 
 }
